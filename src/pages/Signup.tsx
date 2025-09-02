@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, EyeOff, Lock, Mail, User, UserPlus } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User, UserPlus, Store, MapPin, Phone } from "lucide-react";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,6 +17,12 @@ export default function Signup() {
     email: "",
     password: "",
     confirmPassword: "",
+    storeName: "",
+    businessType: "",
+    phoneNumber: "",
+    address: "",
+    city: "",
+    country: "",
     agreeToTerms: false,
   });
 
@@ -40,157 +46,290 @@ export default function Signup() {
               <UserPlus className="h-6 w-6 text-primary-foreground" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-foreground">Create Account</h1>
-          <p className="text-muted-foreground">Sign up to get started with your inventory</p>
+          <h1 className="text-3xl font-bold text-foreground">Create Your Store</h1>
+          <p className="text-muted-foreground">Set up your account and store information</p>
         </div>
 
         {/* Signup Card */}
         <Card className="shadow-elegant border-border/50">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">Sign Up</CardTitle>
+            <CardTitle className="text-2xl text-center">Store Registration</CardTitle>
             <CardDescription className="text-center">
-              Create your account to start managing your inventory
+              Create your account and set up your store details
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Name Fields */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName" className="text-sm font-medium">
-                    First Name
-                  </Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Personal Information Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <User className="h-4 w-4 text-primary" />
+                  <h3 className="text-lg font-semibold">Personal Information</h3>
+                </div>
+                
+                {/* Name Fields */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="text-sm font-medium">
+                      First Name
+                    </Label>
                     <Input
                       id="firstName"
                       type="text"
                       placeholder="First name"
                       value={formData.firstName}
                       onChange={(e) => handleInputChange("firstName", e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="text-sm font-medium">
+                      Last Name
+                    </Label>
+                    <Input
+                      id="lastName"
+                      type="text"
+                      placeholder="Last name"
+                      value={formData.lastName}
+                      onChange={(e) => handleInputChange("lastName", e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Email Field */}
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-sm font-medium">
+                    Email Address
+                  </Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange("email", e.target.value)}
                       className="pl-10"
                       required
                     />
                   </div>
                 </div>
+
+                {/* Password Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-sm font-medium">
+                      Password
+                    </Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Create a password"
+                        value={formData.password}
+                        onChange={(e) => handleInputChange("password", e.target.value)}
+                        className="pl-10 pr-10"
+                        required
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword" className="text-sm font-medium">
+                      Confirm Password
+                    </Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="confirmPassword"
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder="Confirm password"
+                        value={formData.confirmPassword}
+                        onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                        className="pl-10 pr-10"
+                        required
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      >
+                        {showConfirmPassword ? (
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* Store Information Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Store className="h-4 w-4 text-primary" />
+                  <h3 className="text-lg font-semibold">Store Information</h3>
+                </div>
+
+                {/* Store Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="lastName" className="text-sm font-medium">
-                    Last Name
+                  <Label htmlFor="storeName" className="text-sm font-medium">
+                    Store Name
                   </Label>
-                  <Input
-                    id="lastName"
-                    type="text"
-                    placeholder="Last name"
-                    value={formData.lastName}
-                    onChange={(e) => handleInputChange("lastName", e.target.value)}
-                    required
-                  />
+                  <div className="relative">
+                    <Store className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="storeName"
+                      type="text"
+                      placeholder="Enter your store name"
+                      value={formData.storeName}
+                      onChange={(e) => handleInputChange("storeName", e.target.value)}
+                      className="pl-10"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Email Field */}
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium">
-                  Email Address
-                </Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    className="pl-10"
-                    required
-                  />
+                {/* Business Type & Phone */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="businessType" className="text-sm font-medium">
+                      Business Type
+                    </Label>
+                    <select
+                      id="businessType"
+                      value={formData.businessType}
+                      onChange={(e) => handleInputChange("businessType", e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      required
+                    >
+                      <option value="">Select business type</option>
+                      <option value="retail">Retail Store</option>
+                      <option value="wholesale">Wholesale</option>
+                      <option value="restaurant">Restaurant</option>
+                      <option value="pharmacy">Pharmacy</option>
+                      <option value="grocery">Grocery Store</option>
+                      <option value="electronics">Electronics</option>
+                      <option value="clothing">Clothing</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phoneNumber" className="text-sm font-medium">
+                      Phone Number
+                    </Label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="phoneNumber"
+                        type="tel"
+                        placeholder="Your phone number"
+                        value={formData.phoneNumber}
+                        onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                        className="pl-10"
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Password Field */}
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium">
-                  Password
-                </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Create a password"
-                    value={formData.password}
-                    onChange={(e) => handleInputChange("password", e.target.value)}
-                    className="pl-10 pr-10"
-                    required
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-muted-foreground" />
-                    ) : (
-                      <Eye className="h-4 w-4 text-muted-foreground" />
-                    )}
-                  </Button>
+                {/* Address */}
+                <div className="space-y-2">
+                  <Label htmlFor="address" className="text-sm font-medium">
+                    Store Address
+                  </Label>
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="address"
+                      type="text"
+                      placeholder="Street address"
+                      value={formData.address}
+                      onChange={(e) => handleInputChange("address", e.target.value)}
+                      className="pl-10"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Confirm Password Field */}
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-sm font-medium">
-                  Confirm Password
-                </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="confirmPassword"
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm your password"
-                    value={formData.confirmPassword}
-                    onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                    className="pl-10 pr-10"
-                    required
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4 text-muted-foreground" />
-                    ) : (
-                      <Eye className="h-4 w-4 text-muted-foreground" />
-                    )}
-                  </Button>
+                {/* City & Country */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="city" className="text-sm font-medium">
+                      City
+                    </Label>
+                    <Input
+                      id="city"
+                      type="text"
+                      placeholder="City"
+                      value={formData.city}
+                      onChange={(e) => handleInputChange("city", e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="country" className="text-sm font-medium">
+                      Country
+                    </Label>
+                    <Input
+                      id="country"
+                      type="text"
+                      placeholder="Country"
+                      value={formData.country}
+                      onChange={(e) => handleInputChange("country", e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* Terms Agreement */}
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="terms"
-                  checked={formData.agreeToTerms}
-                  onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
-                />
-                <Label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  I agree to the{" "}
-                  <Link to="/terms" className="text-primary hover:text-primary/80 underline">
-                    Terms of Service
-                  </Link>{" "}
-                  and{" "}
-                  <Link to="/privacy" className="text-primary hover:text-primary/80 underline">
-                    Privacy Policy
-                  </Link>
-                </Label>
+              <div className="space-y-3">
+                <Separator />
+                <div className="flex items-start space-x-2">
+                  <Checkbox
+                    id="terms"
+                    checked={formData.agreeToTerms}
+                    onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
+                    className="mt-1"
+                  />
+                  <Label
+                    htmlFor="terms"
+                    className="text-sm font-medium leading-relaxed peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    I agree to the{" "}
+                    <Link to="/terms" className="text-primary hover:text-primary/80 underline">
+                      Terms of Service
+                    </Link>{" "}
+                    and{" "}
+                    <Link to="/privacy" className="text-primary hover:text-primary/80 underline">
+                      Privacy Policy
+                    </Link>
+                    {". "}By creating an account, I confirm that the store information provided is accurate.
+                  </Label>
+                </div>
               </div>
 
               {/* Signup Button */}
@@ -200,7 +339,7 @@ export default function Signup() {
                 size="lg"
                 disabled={!formData.agreeToTerms}
               >
-                Create Account
+                Create Store Account
               </Button>
             </form>
 
