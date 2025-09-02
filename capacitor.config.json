@@ -1,0 +1,10 @@
+{
+  "appId": "app.lovable.a7f8303a57a74f1bad346cecedc484ec",
+  "appName": "shop-chlao-mobile",
+  "webDir": "dist",
+  "server": {
+    "url": "https://a7f8303a-57a7-4f1b-ad34-6cecedc484ec.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  },
+  "bundledWebRuntime": false
+}
